@@ -61,7 +61,7 @@ create table out_patient(
 );
 create table in_patient(
 	in_pat_id int NOT NULL,
-	room_no int,
+	room_no char(10),
 	constraint pk_out_patient PRIMARY KEY (in_pat_id)
 );
 create table consultation(
@@ -90,11 +90,11 @@ create table registration(
 	pat_id int NOT NULL,
 	constraint pk_registration PRIMARY KEY (reg_id)
 );
-create table vist(
+create table visit(
 	vis_id int NOT NULL,
-	vist_date date,
+	visit_date date,
 	pat_id int,
-	constraint pk_vist PRIMARY KEY (vis_id)
+	constraint pk_visit PRIMARY KEY (vis_id)
 );
 create table diagnosis(
 	test_id int NOT NULL,
@@ -117,7 +117,7 @@ create table reports(
 	constraint pk_reports PRIMARY KEY (rep_id)
 );
 create table room(
-	room_no char(30) NOT NULL,
+	room_no char(10) NOT NULL,
 	no_of_beds int,
 	nur_id int,
 	constraint pk_room PRIMARY KEY (room_no)
