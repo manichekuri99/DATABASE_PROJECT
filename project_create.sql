@@ -75,7 +75,7 @@ create table  prescription(
 	pre_id int NOT NULL,
 	con_id int NOT NULL,
 	pres_date date,
-	constraint pk_prescription PRIMARY KEY (pre_no)
+	constraint pk_prescription PRIMARY KEY (pre_id)
 );
 create table medication(
 	med_id int NOT NULL,
@@ -130,7 +130,7 @@ create table bills(
 	constraint pk_bill PRIMARY KEY (bil_id)
 );
 create table hos_pat(
-	hos_pat_id NOT NULL AUTO_INCREMENT,
+	hos_pat_id int NOT NULL AUTO_INCREMENT,
 	hos_id int,
 	pat_id int,
 	constraint pk_hos_pat PRIMARY KEY (hos_pat_id)
