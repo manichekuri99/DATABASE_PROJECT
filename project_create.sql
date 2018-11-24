@@ -11,7 +11,7 @@ create table staff(
 	name varchar(30),
 	age smallint,
 	salary int,
-	moblie int,
+	mobile varchar(15),
 	gender char(6),
 	hos_id int,
 	constraint pk_staff PRIMARY KEY (sta_id)
@@ -107,7 +107,7 @@ create table department(
 	dep_id int NOT NULL,
 	name varchar(30),
 	constraint pk_department PRIMARY KEY (dep_id)
-);	
+);
 create table reports(
 	rep_id int NOT NULL,
 	pat_id int,
@@ -123,7 +123,7 @@ create table room(
 	constraint pk_room PRIMARY KEY (room_no)
 );
 create table bills(
-	bil_id int NOT NULL, 
+	bil_id int NOT NULL,
 	pat_id int,
 	amount int,
 	bill_date date,
