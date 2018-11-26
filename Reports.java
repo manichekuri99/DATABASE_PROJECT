@@ -24,7 +24,7 @@ public class Reports
 	{
 		patientID = patientID;
 	}
-	public int getRollNo()
+	public int getPatientID()
 	{
 		return patientID;
 	} 
@@ -36,4 +36,10 @@ public class Reports
 	{
 		return doctorID;
 	}
-}
+	public void print()
+	{ 
+		System.out.println("ReportID=" + reportID);
+		System.out.println("PatientID=" + patientID);
+		System.out.println("DoctorID=" + doctorID);
+	}
+};
