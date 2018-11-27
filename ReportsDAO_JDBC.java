@@ -3,7 +3,7 @@ import java.util.List;
 import java.sql.*;
 
 
-public class ReportsDAO_JDBC implements ReportDAO {
+public class ReportsDAO_JDBC implements ReportsDAO {
 																																																																																																																																																																																																																																															Connection dbConnection;
 
 	public ReportsDAO_JDBC(Connection dbconn){
@@ -17,22 +17,26 @@ public class ReportsDAO_JDBC implements ReportDAO {
 		Reports r = new Reports();
 		String sql;
 		Statement stmt = null;
-		
+
 		try{
 			stmt = dbConnection.createStatement();
-			sql = "select reportID, patientID, doctorID from Reports";
+			sql = "select rep_id, pat_id, doc_id,report from reports";
 			ResultSet rs = stmt.executeQuery(sql);
-																																																																																																																																																																																			
+
 			//STEP 5: Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
-				int reportID  = rs.getInt("reportID");
-				int patientID = rs.getInt("patientID");
-				int doctorID = rs.getInt("doctorID");
-				r.setBillNo(billno);
-				r.setPatientID(patientID);
-				r.setAmount(doctorID);
-				break;
+				int repID  = rs.getInt("rep_id");
+				int patID = rs.getInt("pat_id");
+				int docID = rs.getInt("doc_id");
+				String rep = rs.getString("report");
+				if (patientID == patID) {
+					r.setReportID(repID);
+					r.setPatientID(patID);
+					r.setDoctorID(docID);
+					r.setReport(rep);
+					break;
+				}
 				// Add exception handling here if more than one row is returned
 			}
 		} catch (SQLException ex) {
@@ -42,38 +46,38 @@ public class ReportsDAO_JDBC implements ReportDAO {
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		// Add exception handling when there is no matching record
-		return s;
+		return r;
 	}
 
-	@Override
-	public void addBill(Reports report) {
-		PreparedStatement preparedStatement = null;																																																																																																																																													
-		String sql;
-		sql = "insert into reports(reports, patientID, doctorID) values (?, ?, ?)";
-
-		try {
-			preparedStatement = dbConnection.prepareStatement(sql);
- 
-			preparedStatement.setInt(1, report.getBillno());
-			preparedStatement.setInt(2, report.getPatientID());
-			preparedStatement.setInt(3, report.getAmount());
-			preparedStatement.setString(4, report.getDate());
- 
-			// execute insert SQL stetement
-			preparedStatement.executeUpdate();
- 
-			System.out.println("Report: Report No " + report.getReportNo() 
-				+ ", added to the database");
-		} catch (SQLException e) {
- 			System.out.println(e.getMessage());
- 		}
-
-		try{
-			if (preparedStatement != null) {
-				preparedStatement.close();
-			}
-		} catch (SQLException e) {
- 			System.out.println(e.getMessage());
- 		}
-	}
+	// @Override
+	// public void addBill(Reports report) {
+	// 	PreparedStatement preparedStatement = null;
+	// 	String sql;
+	// 	sql = "insert into reports(reports, patientID, doctorID) values (?, ?, ?)";
+	//
+	// 	try {
+	// 		preparedStatement = dbConnection.prepareStatement(sql);
+	//
+	// 		preparedStatement.setInt(1, report.getBillno());
+	// 		preparedStatement.setInt(2, report.getPatientID());
+	// 		preparedStatement.setInt(3, report.getAmount());
+	// 		preparedStatement.setString(4, report.getDate());
+	//
+	// 		// execute insert SQL stetement
+	// 		preparedStatement.executeUpdate();
+	//
+	// 		System.out.println("Report: Report No " + report.getReportNo()
+	// 			+ ", added to the database");
+	// 	} catch (SQLException e) {
+ 	// 		System.out.println(e.getMessage());
+ 	// 	}
+	//
+	// 	try{
+	// 		if (preparedStatement != null) {
+	// 			preparedStatement.close();
+	// 		}
+	// 	} catch (SQLException e) {
+ 	// 		System.out.println(e.getMessage());
+ 	// 	}
+	// }
 }
