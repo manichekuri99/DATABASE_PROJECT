@@ -13,8 +13,9 @@ public class BillsDAO_JDBC implements BillsDAO {
 	}
 
 	@Override
-	public Bills getBillByPatientID(int patientID) {
-		Bills b = new Bills();
+	public ArrayList<Bills> getBillByPatientID(int patientID) {
+		// Bills b = new Bills();
+		ArrayList<Bills> bills = new ArrayList<Bills>();
 		String sql;
 		Statement stmt = null;
 
@@ -31,11 +32,12 @@ public class BillsDAO_JDBC implements BillsDAO {
 				int amount = rs.getInt("amount");
 				String date = rs.getString("bill_date");
 				if(patientID == patID){
+					Bills b = new Bills();
 					b.setBillNo(billno);
 					b.setPatientID(patID);
 					b.setAmount(amount);
 					b.setDate(date);
-					break;
+					bills.add(b);
 				}
 				// Add exception handling here if more than one row is returned
 			}
@@ -46,7 +48,7 @@ public class BillsDAO_JDBC implements BillsDAO {
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		// Add exception handling when there is no matching record
-		return b;
+		return bills;
 	}
 
 	// @Override

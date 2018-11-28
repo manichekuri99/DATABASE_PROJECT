@@ -10,16 +10,21 @@ import java.sql.*;
 public class DAO_Factory{
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
-	// Modify the DB_URL string, userid and password depending upon the database you want to connect to 
+	// Modify the DB_URL string, userid and password depending upon the database you want to connect to
 	// In the following string, you are connecting a adatabase named "daoproject"
-	static final String DB_URL = "jdbc:mysql://localhost/daoproject";
+	static final String DB_URL = "jdbc:mysql://localhost/hosp_mang";
 	static final String USER = "root";
-	static final String PASS = "root";
+	static final String PASS = "3010";
 
 	Connection dbconnection = null;
 
 	// You can add additional DAOs here as needed. Generally one DAO per class
-	StudentDAO studentDAO = null;
+	BillsDAO billsDAO = null;
+  ReportsDAO reportsDAO = null;
+  PatientDAO patientDAO = null;
+  ConsultationDAO consultationDAO = null;
+  OperationDAO operationDAO = null;
+  DoctorDAO doctorDAO = null;
 
 	boolean activeConnection = false;
 
@@ -49,16 +54,73 @@ public class DAO_Factory{
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 	}
-	public StudentDAO getStudentDAO() throws Exception
+
+	public BillsDAO getBillsDAO() throws Exception
 	{
 		if( activeConnection == false )
 			throw new Exception("Connection not activated...");
 
-		if( studentDAO == null )
-			studentDAO = new StudentDAO_JDBC( dbconnection );
+		if( billsDAO == null )
+			billsDAO = new BillsDAO_JDBC( dbconnection );
 
-		return studentDAO;
+		return billsDAO;
 	}
+
+  public ReportsDAO getReportsDAO() throws Exception
+	{
+		if( activeConnection == false )
+			throw new Exception("Connection not activated...");
+
+		if( reportsDAO == null )
+			reportsDAO = new ReportsDAO_JDBC( dbconnection );
+
+		return reportsDAO;
+	}
+
+  public PatientDAO getPatientDAO() throws Exception
+	{
+		if( activeConnection == false )
+			throw new Exception("Connection not activated...");
+
+		if( patientDAO == null )
+			patientDAO = new PatientDAO_JDBC( dbconnection );
+
+		return patientDAO;
+	}
+
+  public ConsultationDAO getConsultationDAO() throws Exception
+	{
+		if( activeConnection == false )
+			throw new Exception("Connection not activated...");
+
+		if( consultationDAO == null )
+			consultationDAO = new ConsultationDAO_JDBC( dbconnection );
+
+		return consultationDAO;
+	}
+
+  public OperationDAO getOperationDAO() throws Exception
+	{
+		if( activeConnection == false )
+			throw new Exception("Connection not activated...");
+
+		if( operationDAO == null )
+			operationDAO = new OperationDAO_JDBC( dbconnection );
+
+		return operationDAO;
+	}
+
+  public DoctorDAO getDoctorDAO() throws Exception
+  {
+    if( activeConnection == false )
+      throw new Exception("Connection not activated...");
+
+    if( doctorDAO == null )
+      doctorDAO = new DoctorDAO_JDBC( dbconnection );
+
+    return doctorDAO;
+  }
+
 	public void deactivateConnection()
 	{
 		// Okay to keep deactivating an already deactivated connection
@@ -67,7 +129,12 @@ public class DAO_Factory{
 			try{
 				dbconnection.close();
 				dbconnection = null;
-				studentDAO = null;
+				billsDAO = null;
+        reportsDAO = null;
+        patientDAO = null;
+        consultationDAO = null;
+        operationDAO = null;
+        doctorDAO = null;
 			}
 			catch (SQLException ex) {
 			    // handle any errors
@@ -78,4 +145,3 @@ public class DAO_Factory{
 		}
 	}
 };
-

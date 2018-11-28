@@ -13,8 +13,9 @@ public class ReportsDAO_JDBC implements ReportsDAO {
 	}
 
 	@Override
-	public Reports getReportByPatientID(int patientID) {
-		Reports r = new Reports();
+	public ArrayList<Reports> getReportByPatientID(int patientID) {
+		// Reports r = new Reports();
+		ArrayList<Reports> reports = new ArrayList<Reports>();
 		String sql;
 		Statement stmt = null;
 
@@ -31,11 +32,12 @@ public class ReportsDAO_JDBC implements ReportsDAO {
 				int docID = rs.getInt("doc_id");
 				String rep = rs.getString("report");
 				if (patientID == patID) {
+					Reports r = new Reports();
 					r.setReportID(repID);
 					r.setPatientID(patID);
 					r.setDoctorID(docID);
 					r.setReport(rep);
-					break;
+					reports.add(r);
 				}
 				// Add exception handling here if more than one row is returned
 			}
@@ -46,7 +48,7 @@ public class ReportsDAO_JDBC implements ReportsDAO {
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		// Add exception handling when there is no matching record
-		return r;
+		return reports;
 	}
 
 	// @Override
