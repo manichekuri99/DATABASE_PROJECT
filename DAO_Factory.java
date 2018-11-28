@@ -10,17 +10,16 @@ import java.sql.*;
 public class DAO_Factory{
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
-	// Modify the DB_URL string, userid and password depending upon the database you want to connect to
+	// Modify the DB_URL string, userid and password depending upon the database you want to connect to 
 	// In the following string, you are connecting a adatabase named "daoproject"
-	static final String DB_URL = "jdbc:mysql://localhost/hosp_mang";
+	static final String DB_URL = "jdbc:mysql://localhost/daoproject";
 	static final String USER = "root";
-	static final String PASS = "3010";
+	static final String PASS = "root";
 
 	Connection dbconnection = null;
 
 	// You can add additional DAOs here as needed. Generally one DAO per class
-	BillsDAO billsDAO = null;
-  ReportsDAO reportsDAO = null;
+	StudentDAO studentDAO = null;
 
 	boolean activeConnection = false;
 
@@ -50,26 +49,15 @@ public class DAO_Factory{
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 	}
-	public BillsDAO getBillsDAO() throws Exception
+	public StudentDAO getStudentDAO() throws Exception
 	{
 		if( activeConnection == false )
 			throw new Exception("Connection not activated...");
 
-		if( billsDAO == null )
-			billsDAO = new BillsDAO_JDBC( dbconnection );
+		if( studentDAO == null )
+			studentDAO = new StudentDAO_JDBC( dbconnection );
 
-		return billsDAO;
-	}
-
-  public ReportsDAO getReportsDAO() throws Exception
-	{
-		if( activeConnection == false )
-			throw new Exception("Connection not activated...");
-
-		if( reportsDAO == null )
-			reportsDAO = new ReportsDAO_JDBC( dbconnection );
-
-		return reportsDAO;
+		return studentDAO;
 	}
 	public void deactivateConnection()
 	{
@@ -79,8 +67,7 @@ public class DAO_Factory{
 			try{
 				dbconnection.close();
 				dbconnection = null;
-				billsDAO = null;
-        reportsDAO = null;
+				studentDAO = null;
 			}
 			catch (SQLException ex) {
 			    // handle any errors
@@ -91,3 +78,4 @@ public class DAO_Factory{
 		}
 	}
 };
+

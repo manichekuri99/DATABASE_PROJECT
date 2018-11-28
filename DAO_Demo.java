@@ -1,26 +1,38 @@
 //STEP 1. Import required packages
 import java.sql.*;
-// import DAO_Factory;
-// import Student;
-// import StudentDAO_JDBC;
-// import StudentDAO;
 
 public class DAO_Demo {
 	public static void main(String[] args) {
 		try{
-			DAO_Factory daoFactory = new DAO_Factory();
+			// DAO_Factory daoFactory = new DAO_Factory();
 
-			daoFactory.activateConnection();
+			// daoFactory.activateConnection();
 
-			BillsDAO bdao = daoFactory.getBillsDAO();
-			Bills b = bdao.getBillByPatientID(6);
-			b.print();
+			// StudentDAO sdao = daoFactory.getStudentDAO();
+			// Student s = sdao.getStudentByKey(1);
+			// s.print();
 
-      ReportsDAO rdao = daoFactory.getReportsDAO();
-			Reports r = rdao.getReportByPatientID(4);
-			r.print();
+			BillsDAO_Factory billsDAOfactory = new BillsDAO_Factory();
 
-			daoFactory.deactivateConnection();
+			billsDAOfactory.activateConnection();
+
+			BillsDAO bdao = billsDAOfactory.getBillsDAO();
+			Bills b = bdao.getBillByPatientByID(1);
+			b.print(); 
+
+			System.out.println();
+
+			ReportsDAO_Factory reportsDAOfactory = new ReportsDAO_Factory();
+
+			reportsDAOfactory.activateConnection();
+
+			ReportsDAO rdao = reportsDAOfactory.getReportsDAO();
+			Reports r = rdao.getReportByPatientByID(1);
+			r.print();			
+
+			//daoFactory.deactivateConnection();
+			billsDAOfactory.deactivateConnection();
+			reportsDAOfactory.deactivateConnection();
 		}catch(Exception e){
 				//Handle errors for Class.forName
 				e.printStackTrace();
